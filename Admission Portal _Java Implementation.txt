@@ -1,0 +1,777 @@
+
+package FinalProject;
+
+public class Age {
+	int month;
+	int date;
+	int year;
+}
+
+package FinalProject;
+
+public class Adress {
+	String city;
+	String housenum;
+	String street;
+}
+package FinalProject;
+import java.util.Scanner;
+public  class AdmissionForm {
+	int form_num;
+	Age age;
+	String app_name;
+	String phone_num;
+	String app_nic;
+	String discipline;
+	Adress address;
+	public static int auto_form_num;
+	static
+	{
+		auto_form_num=1;
+	}
+	float metric_per, inter_per, avg_per;
+	boolean ismuslim;static int issue_forms = 0;
+	int total_form = 5;
+	Scanner scanner=new Scanner(System.in);
+	AdmissionForm []forms = new AdmissionForm[total_form];
+	int userchoice;String yes;
+	//ISSUE ADMISSION FORM
+	public void issueAdmissionForm(int index)
+	{
+		
+		if (index == total_form)
+		{
+			System.out.print("All forms are issued\n");
+		}
+		else
+		{
+			issue_forms = issue_forms + 1;
+			forms[index].form_num = auto_form_num;
+			auto_form_num++;
+			System.out.print("Form number=" + forms[index].form_num +"\n");
+			System.out.print("Enter applicant name\n");
+			forms[index].app_name=scanner.next();
+			while (isAlphabet(forms[index].app_name))
+			{
+				System.out.print("Invalid name,re-enter valid name\n");
+				forms[index].app_name=scanner.next();
+			}
+			System.out.print("Enter date of birth:(1-31)\n");
+			System.out.print( "Enter birth date\n");
+			forms[index].age.date=scanner.nextInt();
+			while (forms[index].age.date < 0 || forms[index].age.date>31)
+			{
+				System.out.print("Invalid date of birth,re-enter \n");
+			 forms[index].age.date=scanner.nextInt();
+			}
+			System.out.print( "Enter birth month number(1-12)\n");
+			forms[index].age.month=scanner.nextInt();
+			while (forms[index].age.month < 0 ||forms[index].age.month>12)
+			{
+				System.out.print("Invalid month ,re-enter \n");
+				forms[index].age.month=scanner.nextInt();
+			}
+			System.out.print("Enter birth year number(like:2004)\n");
+			forms[index].age.year=scanner.nextInt();
+			if (forms[index].age.year >= 1997 && forms[index].age.year <= 2006)
+			{  
+				System.out.print("Enter applicant nic (plz write it without hyphen)\n");
+				forms[index].app_nic=scanner.next();
+				while (!chk_num(forms[index].app_nic))
+				{
+					System.out.print("Invalid CNIC,re-enter \n");
+					forms[index].app_nic=scanner.next();
+				}
+				System.out.print("Enter phone number\n");
+				forms[index].phone_num=scanner.next();
+				while (!chk_num(forms[index].phone_num))
+				{
+					System.out.print("Invalid phone #,re-enter \n");
+					forms[index].phone_num=scanner.next();
+				}
+				System.out.print("Enter city \n");
+				forms[index].address.city=scanner.next();
+				while (!chk_alpha(forms[index].address.city))
+				{
+					System.out.print("Invalid city name,re-enter\n");
+					forms[index].address.city=scanner.next();
+				}
+				System.out.print("Enter house#\n");
+				forms[index].address.housenum=scanner.next();
+				while (!chk_num(forms[index].address.housenum))
+				{
+					System.out.print("Invalid house #,re-enter \n");
+					forms[index].address.housenum=scanner.next();
+				}
+				System.out.print("Enter street#\n");
+				forms[index].address.street=scanner.next();
+				while (!chk_num(forms[index].address.street))
+				{
+					System.out.print("Invalid street #,re-enter \n");
+					forms[index].address.street=scanner.next();
+				}
+				System.out.print("Enter Metric%\n");
+			    forms[index].metric_per=scanner.nextInt();
+				while (forms[index].metric_per < 0 || forms[index].metric_per>100)
+				{
+					System.out.print("Invalid metric %,re-enter \n");
+					forms[index].metric_per=scanner.nextFloat();
+				}
+				System.out.print("Enter Inter%\n");
+				forms[index].inter_per=scanner.nextFloat();
+				while (forms[index].inter_per < 0 || forms[index].inter_per>100)
+				{
+					System.out.print("Invalid inter %,re-enter \n");
+					forms[index].inter_per=scanner.nextFloat();
+				}
+				System.out.print("Average percentage:\n");
+				forms[index].avg_per = (forms[index].metric_per + forms[index].inter_per) / 2;
+				System.out.print(forms[index].avg_per + "\n");
+				System.out.print("Enter discipline BSCS,BSAI, BSSE\n");
+				forms[index].discipline=scanner.next();
+				while (!chk_alpha(forms[index].discipline))
+				{
+					System.out.print("Invalid ,re-enter\n");
+					forms[index].discipline=scanner.next();
+				}
+				System.out.print("Press M if you are muslim\n");
+				String h=scanner.next();
+				if (h.equals('M') || h.equals('m'))
+				{
+					forms[index].ismuslim = true;
+					System.out.print("MUSLIM\n");
+				}
+				else
+				{
+					forms[index].ismuslim = false; System.out.print("NON MUSLIM\n");
+				}
+				index++; 
+			}
+			else if (forms[index].age.year < 1997 || forms[index].age.year>2006)
+			{
+				while (forms[index].age.year < 1997 || forms[index].age.year>2006)
+				{
+					System.out.print("You are ineligible for admission\n");
+					System.out.print("press r to re-enter birth year\npress v to view main menu\n");
+					
+					yes=scanner.next();
+					if (yes.equalsIgnoreCase("r"))
+					{
+						System.out.print("Enter birth year:");
+						forms[index].age.year=scanner.nextInt();
+					}
+					else if (yes.equalsIgnoreCase("v"))
+					{
+						break;
+					}
+				}
+					if (yes.equalsIgnoreCase("r"))
+					{
+						System.out.print("Enter applicant nic (plz write it without hyphen)\n");
+						forms[index].app_nic=scanner.next();
+						while (!chk_num(forms[index].app_nic))
+						{
+							System.out.print("Invalid CNIC,re-enter \n");
+							forms[index].app_nic=scanner.next();
+						}
+						System.out.print("Enter phone number\n");
+						forms[index].phone_num=scanner.next();
+						while (!chk_num(forms[index].phone_num))
+						{
+							System.out.print("Invalid phone #,re-enter \n");
+							forms[index].phone_num=scanner.next();
+						}
+						System.out.print("Enter city \n");
+						forms[index].address.city=scanner.next();
+						while (!chk_alpha(forms[index].address.city))
+						{
+							System.out.print("Invalid city name,re-enter\n");
+							forms[index].address.city=scanner.next();
+						}
+						System.out.print("Enter house#\n");
+						forms[index].address.housenum=scanner.next();
+						while (!chk_num(forms[index].address.housenum))
+						{
+							System.out.print("Invalid house #,re-enter \n");
+							forms[index].address.housenum=scanner.next();
+						}
+						System.out.print("Enter street#\n");
+						forms[index].address.street=scanner.next();
+						while (!chk_num(forms[index].address.street))
+						{
+							System.out.print("Invalid street #,re-enter \n");
+							forms[index].address.street=scanner.next();
+						}
+						System.out.print("Enter Metric%\n");
+						forms[index].metric_per=scanner.nextInt();
+						while (forms[index].metric_per < 0 || forms[index].metric_per>100)
+						{
+							System.out.print("Invalid metric %,re-enter \n");
+							forms[index].metric_per=scanner.nextInt();
+						}
+						System.out.print("Enter Inter%\n");
+						forms[index].inter_per=scanner.nextInt();
+						while (forms[index].inter_per < 0 || forms[index].inter_per>100)
+						{
+							System.out.print("Invalid inter %,re-enter \n");
+						   forms[index].inter_per=scanner.nextInt();
+						}
+						System.out.print("Average percentage:\n");
+						forms[index].avg_per = (forms[index].metric_per + forms[index].inter_per) / 2;
+						System.out.print(forms[index].avg_per + "\n");
+						System.out.print( "Enter discipline BSCS,BSAI, BSSE\n");
+						forms[index].discipline=scanner.next();
+						while (!chk_alpha(forms[index].discipline))
+						{
+							System.out.print("Invalid ,re-enter\n");
+						    forms[index].discipline=scanner.next();
+						}
+						System.out.print("Press M if you are muslim\n");
+						String ch;
+						ch=scanner.next();
+						if (ch.equalsIgnoreCase("m"))
+						{
+							forms[index].ismuslim = true;
+							System.out.print("MUSLIM\n");
+						}
+						else
+						{
+							forms[index].ismuslim = false;System.out.print("NON MUSLIM\n");
+						}
+						index++;
+					}
+				
+			}
+		}
+	}
+	
+	
+
+	//VIEW ALL APPLICANTS
+public void veiwApplicants(AdmissionForm forms[])
+{
+	if (forms.length == 0)
+	{
+		System.out.print("No data\n");
+	}
+	else
+	{
+		System.out.print("Form#   Name\t   DOB    \t NIC \t   PHONE # \tCity  \tHouse# \tStrt#\tDisc"
+				+ " \tMper \tIper \tAvg per\tRELIGION\n");
+		for(int i=0;i<forms.length;i++)
+		{
+		display(forms[i]);	
+		}
+}
+
+}
+
+
+//VIEW DISCIPLINEVISE APPLICANTS
+public void displayDisciplineWise(AdmissionForm forms[])
+{
+	if (forms[0]==null)
+	{
+		System.out.print("No data\n");
+	}
+	else
+	{
+		System.out.print("Enter discipline\n");
+		String dis;
+		 dis=scanner.next();
+		 int count=0;int j=0;
+		 for (int i=0;i<forms.length;i++)
+		 {
+			 if(forms[i].discipline.equalsIgnoreCase(dis))
+			 {
+				 count++;
+			 }
+		 }
+		 if(count==0)
+		 {
+			 System.out.print("There is no applicant for this discipline\n");
+		 }
+		 else
+		 {
+		 AdmissionForm newarr[]=new AdmissionForm[count];
+		 for(int i=0;i<forms.length;i++)
+		 {
+			 if(forms[i].discipline.equalsIgnoreCase(dis))
+			 {
+				 newarr[j]=forms[i];
+				 j++;
+			 }
+		 }
+		 for(int i=0;i<newarr.length;i++)
+		 {
+			 display(newarr[i]);
+		 }
+		 }
+		}
+	}
+
+
+//SERCH THROUGH FORMS
+public void searchThroughForms(AdmissionForm forms[])
+{
+	if (forms[0]==null)
+	{
+		System.out.print("No data\n");
+	}
+	System.out.print( "Press N for NIC\n");
+	System.out.print( "Press F for sform num\n");
+	System.out.print("Press X for Name\n");
+	char ch = 0;
+	ch=scanner.next().charAt(0);
+	int flag = 0;
+	AdmissionForm search=null;
+	
+     if (ch == 'n' || ch == 'N')
+	{
+
+    	 System.out.print("Enter NIC to be searched: ");
+		search.app_nic=scanner.next();
+		for (int i = 0; i <forms.length; i++)
+		{
+			if (search.app_nic.equalsIgnoreCase(forms[i].app_nic))
+			{
+				search=forms[i];
+				flag = 1; break;
+			}
+		}
+		if (flag == 1)
+		{
+			System.out.print("nic matched\n");
+			display(search);
+		}
+
+		else
+		{
+			System.out.print("nic don't match\n");
+		}
+	}
+
+     if (ch == 'f' || ch == 'F')
+ 	{
+
+     	 System.out.print("Enter formnum to be searched: ");
+ 		search.form_num=scanner.nextInt();
+ 		for (int i = 0; i <forms.length; i++)
+ 		{
+ 			if (search.form_num==forms[i].form_num)
+ 			{
+ 				search=forms[i];
+ 				flag = 1; break;
+ 			}
+ 		}
+ 		if (flag == 1)
+ 		{
+ 			System.out.print("formnum matched\n");
+ 			display(search);
+ 		}
+
+ 		else
+ 		{
+ 			System.out.print("formnum don't match\n");
+ 		}
+ 	}
+     if (ch == 'x' || ch == 'X')
+ 	{
+
+     	 System.out.print("Enter name to be searched: ");
+ 		search.app_name=scanner.next();
+ 		for (int i = 0; i <forms.length; i++)
+ 		{
+ 			if (search.app_name.equalsIgnoreCase(forms[i].app_name))
+ 			{
+ 				search=forms[i];
+ 				flag = 1; break;
+ 			}
+ 		}
+ 		if (flag == 1)
+ 		{
+ 			System.out.print("name matched\n");
+ 			display(search);
+ 		}
+
+ 		else
+ 		{
+ 			System.out.print("name don't match\n");
+ 		}
+ 	}
+
+}
+
+
+//ELIGIBLE STUDENTS
+public void eligibleStudents(AdmissionForm forms[])
+{
+	if (forms[0] == null)
+	{
+		System.out.print("No data\n");
+	}
+	else
+	{
+		int flag=0;
+		for (int i = 0; i < issue_forms; i++)
+		{
+			
+			 if (forms[i].age.year < 2006 && forms[i].age.year > 1997 && forms[i].avg_per>49)
+			{       flag=1;
+			System.out.print("Form#\tName\t  DOB  \tNIC      \tPHONE #     \tCity  \tHouse# \tStreet#\tDisc \tMper\tIper\tRELIGION\n");
+				display(forms[i]);
+			}
+		} 
+			  if (flag==0)
+				{
+				  System.out.print("NO ELIGIBLE STUDENT");
+				}
+		}
+}
+
+
+//INELIGIBLE STUDENTS
+public void ineligibleStudents(AdmissionForm forms[])
+{int flag=0;
+	if (forms[0]== null)
+	{
+		  System.out.print("No data\n");
+	}
+	else
+	{
+		for (int i = 0; i < issue_forms; i++)
+		{
+			if (forms[i].age.year > 2006 || forms[i].age.year < 1997 || forms[i].avg_per < 49)
+			{            flag=1;
+				  System.out.print( "Form#\tName\t DOB   \tNIC      \tPHONE #     \tCity  \tHouse# "
+				  		+ "\tStreet#\tDisc \tMper\tIper\tRELIGION\n");
+				display(forms[i]);
+			}
+		}
+		 if (flag==0)
+			{
+			  System.out.print("NO INELIGIBLE STUDENT");
+			}
+	}
+}
+
+//EDIT THE DATA
+public void editData(AdmissionForm forms[])
+{
+	int id;
+	System.out.print("Enter the form_num of applicant whose data has to edit:");
+	 id=scanner.nextInt(); int edit; int req = id - 1;
+
+
+	if (id > issue_forms||id <1)
+	{
+		System.out.print("form has not issued yet or invalid form_number\n");
+	}
+	else
+	{
+		menu1();
+			 edit=scanner.nextInt();
+			 System.out.print(" \n ");
+			if (edit == 1)
+			{
+				System.out.print("Enter name:");
+				forms[req].app_name=scanner.next();
+				while (!isAlphabet(forms[req].app_name))
+				{
+					System.out.print( "Invalid name,re-enter valid name\n");
+					forms[req].app_name=scanner.next();
+				}
+				
+			}
+			else if (edit == 2)
+			{
+				System.out.print("Enter cnic:");
+				forms[req].app_nic=scanner.next();
+				while (!chk_num(forms[req].app_nic))
+				{
+					System.out.print("Invalid CNIC,re-enter \n");
+					forms[req].app_nic=scanner.next();
+				}
+			}
+			else if (edit == 3)
+			{
+				System.out.print("Enter phone #:");
+				forms[req].phone_num=scanner.next();
+				while (!chk_num(forms[req].phone_num))
+				{
+					System.out.print( "Invalid phone #,re-enter \n");
+					forms[req].phone_num=scanner.next();
+				}
+			}
+			else if (edit == 4)
+			{
+				System.out.print("Enter city:");
+				forms[req].address.city=scanner.next();
+				while (!isAlphabet(forms[req].address.city))
+				{
+					System.out.print( "Invalid city,re-enter \n");
+					forms[req].address.city=scanner.next();
+				}
+			}
+			else if (edit == 5)
+			{
+				System.out.print("Enter house #:");
+				forms[req].address.housenum=scanner.next();
+				while (!isAlphabet(forms[req].address.housenum))
+				{
+					System.out.print( "Invalid house # ,re-enter \n");
+					forms[req].address.housenum=scanner.next();
+				}
+			}
+			else if (edit == 6)
+			{
+				System.out.print("Enter street #:");
+				forms[req].address.street=scanner.next();
+				while (!isAlphabet(forms[req].address.street))
+				{
+					System.out.print( "Invalid street #,re-enter \n");
+					forms[req].address.street=scanner.next();
+				}
+			}
+			else if (edit == 7)
+			{
+				System.out.print("Enter discipline:");
+				forms[req].discipline=scanner.next();
+				while (!isAlphabet(forms[req].discipline))
+				{
+					System.out.print( "Invalid discipline,re-enter \n");
+					forms[req].discipline=scanner.next();
+				}
+			}
+			else if (edit == 8)
+			{
+				System.out.print("Enter matric percentage:");
+				forms[req].metric_per=scanner.nextInt();
+				while (forms[req].metric_per < 0 || forms[req].metric_per>100)
+				{
+					System.out.print("Invalid metric %,re-enter \n");
+					forms[req].metric_per=scanner.nextInt();
+				}
+			}
+			else if (edit == 9)
+			{
+				System.out.print("Enter inter percentage:");
+				forms[req].inter_per=scanner.nextInt();
+				while (forms[req].inter_per < 0 || forms[req].inter_per>100)
+				{
+					System.out.print("Invalid inter %,re-enter \n");
+					forms[req].inter_per=scanner.nextInt();
+				}
+			}
+		
+			else if (edit == 10)
+			{
+				System.out.print( "YOU HAVE DONE EDITING");
+			}
+}
+}	
+
+
+//SHOW MERIT LIST
+public void showMeritList(AdmissionForm forms[])
+{
+	if (forms[0] == null)
+	{
+		System.out.print("No data\n");
+	}
+	else
+	{
+		
+		// Sort the forms array based on avg_per
+		sSort(forms);
+
+		// Display the merit list of the top 3 students enrolled
+		System.out.print("Merit List - Top Students:\n");
+		System.out.print("Form#\tName\t  DOB  \tNIC      \tPHONE #     \tCity  \tHouse#"
+				+ " \tStreet#\tDisc \tMper\tIper\tAvg per\tRELIGION\n");
+		for (int i = 0; i < forms.length; i++)
+		{
+			if (!(i == issue_forms && forms[i].age.year > 2006 || forms[i].age.year < 1997 || forms[i].avg_per>49))
+			{
+				System.out.print("\nNO ELIGIBLE STUDENT FOR MERIT LIST");
+			}
+			else if (forms[i].age.year < 2006 && forms[i].age.year > 1997 && forms[i].avg_per > 49)
+			{
+				display(forms[i]);
+			}
+		}
+	}
+}
+
+}
+//FUNCTION FOR MENU
+		public static void menu1()
+		{
+
+			 System.out.print( "Press 1 to edit name\n");
+			 System.out.print( "Press 2 to edit CNIC\n");
+			 System.out.print( "Press 3 to edit phone #\n");
+			 System.out.print( "Press 4 to edit city\n");
+			 System.out.print( "Press 5 to edit house number\n");
+			 System.out.print("Press 6 to edit street #\n");
+			 System.out.print( "Press 7 to edit discipline\n");
+			 System.out.print( "press 8 to edit matric %\n");
+			 System.out.print( "press 9 to edit inter %\n");
+			 System.out.print("Press 10 to exit \n");
+		}  
+		
+		
+
+		
+
+	
+		public  void display(AdmissionForm form)
+		{
+			System.out.print( "Form#\tName\t  DOB   \tNIC      \tPHONE #     \tCity  \tHouse# \tStreet#\tDisc \tMper\tIper\tRELIGION\n");
+			System.out.print(form.form_num + "\t" + " ");
+			System.out.print(form.app_name + "\t");
+			System.out.print(form.age.date + "/" + form.age.month + "/" +form.age.year + "   ");
+			System.out.print(form.app_nic +"\t");
+			System.out.print(form.phone_num + "\t");
+			System.out.print(form.address.city +"\t");
+			System.out.print(form.address.housenum + "\t");
+			System.out.print(form.address.street + "\t");
+			System.out.print(form.discipline + "\t");
+			System.out.print(form.metric_per + "\t");
+			System.out.print(form.inter_per + "\t");
+			System.out.print(form.avg_per + "\t");
+			if (form.ismuslim = true)
+			{
+				System.out.print("MUSLIM\n");
+			}
+			else
+			{
+				System.out.print("NON-MUSLIM\n");
+			}
+		}
+		}
+package FinalProject;
+import java.util.Scanner;
+public class Program {
+	
+
+	//HERE STARTS THE MAIN FUNCTION
+	public static void main(String args[])
+	{
+		
+		int total_form = 5;
+		AdmissionForm []forms = new AdmissionForm[total_form];
+		int userchoice;int index = 0;
+		Scanner sc=new Scanner(System.in);
+		System.out.print( "_____________________________________________________________________\n");
+		System.out.print( "|              WELCOME TO BIIT ADMISSION PORTAL                     |\n");
+
+		do
+		{    
+		    
+			menu();        //CALLING A FUNCTION
+		 userchoice=sc.nextInt(); char yes = 0;
+
+		 
+			//ISSUE ADMISSION FORMS
+			if (userchoice == 1)
+			{ 
+				forms[index]=new AdmissionForm();
+				forms[index].issueAdmissionForm(index);
+				index++;
+			}	
+			
+			//VIEW ALL APPLICANTS
+			else if (userchoice == 2)
+			{
+				forms[0].veiwApplicants(forms);	
+			}
+			
+			//VIEW DISCIPLINE WISE APPLICANTS
+			else if (userchoice == 3)
+			{
+			  new AdmissionForm().displayDisciplineWise(forms);
+			}
+			
+			//TO SEARCH THROUGH FORMS
+			else if (userchoice == 4)
+			{
+				forms[0].searchThroughForms(forms);
+			}
+			
+			//SELECTION SORT 
+			else if (userchoice == 5)
+			{
+				forms[0].sortedForms(forms);
+			}
+
+			//ELIGIBLE STUDENTS LIST
+			else if (userchoice == 6)
+			{
+			forms[0].eligibleStudents(forms);	
+			}
+
+
+
+			//INELIGIBLE STUDENTS LIST
+			else if (userchoice == 7)
+			{
+				forms[0].ineligibleStudents(forms);	
+			}
+
+
+			//EDIT THE DATA IF YOU WANT
+			else if (userchoice == 8)
+			{
+				
+				forms[0].editData(forms);
+		    }
+			
+			
+			//SHOW MERIT LIST
+			else if (userchoice == 9)
+			{
+				
+                   forms[0].showMeritList(forms);
+			}
+
+			//EXIT THE CODE
+			else if (userchoice == 10)
+			{
+				 System.out.print("\n        -----------------------");
+				 System.out.print( "\n        |     THANK YOU       |");
+				 System.out.print( "\n        -----------------------");
+				break;
+			}
+			else if (userchoice < 1 || userchoice>9)
+			{
+				 System.out.print("invalid input provide valid input\n");
+			}
+		} while (userchoice != 10);}
+		//FUNTION FOR MENU
+		public static void menu()
+		{
+			 System.out.print( "---------------------------------------------------------------------\n");
+			 System.out.print("|  Press 1 to issue admission form                                  |\n");
+			 System.out.print("|  Press 2 to view all applicants                                   |\n");
+			 System.out.print("|  Press 3 to view discipline wise applicants                       |\n");
+			 System.out.print("|  Press 4 to search                                                |\n");
+			 System.out.print("|  Press 5 to sort                                                  |\n");
+			 System.out.print("|  Press 6 to view list of eligible students                        |\n");
+			 System.out.print("|  Press 7 to view list of ineligible students                      |\n");
+			 System.out.print("|  Press 8 to edit                                                  |\n");
+			 System.out.print("|  Press 9 to view merit list                                       |\n");
+			 System.out.print("|  Press 10 to exit                                                 |\n");
+			 System.out.print( "---------------------------------------------------------------------\n");
+		}
+
+
+		
+	}
+
+
+
+
+
+
+
